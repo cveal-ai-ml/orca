@@ -1,0 +1,85 @@
+# Author: Charlie
+# Purpose: Github workflow to build and commit to GitHub Container Registry (GHCR)
+# Helpful Links:
+# - https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions#the-components-of-github-actions
+# - https://docs.github.com/en/actions/security-guides/automatic-token-authentication
+# - https://docs.github.com/en/actions/publishing-packages/publishing-docker-images
+
+name: Docker build and publish
+
+# Configure: Workflow Event 
+# - This runs the workflow on any push event
+
+on: [push]
+
+# Configure: Environment Variables
+# - Define GHCR information (ghcr.io) and docker image name (github.repository)
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+# Configure: Job 
+
+jobs:
+
+  # - Define a job named "build-and-push-image"
+
+  build-and-push-image:
+
+    # - Job runs using latest version of ubuntu
+
+    runs-on: ubuntu-latest
+
+    # - Define "GITHUB_TOKEN" permissions, use only what is needed
+    # - https://docs.github.com/en/actions/security-guides/automatic-token-authentication
+
+    permissions:
+      contents: read
+      packages: write
+
+    # - The job runs the following steps, each in its own unique shell
+
+    steps:
+
+      # - Checkout this github repository using version 4 (v4) of the "actions/checkout" action
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # - Login to GHCR using the "docker/login-action" action 
+      # -- "docker/login-action" requires the following:
+      # --- env.REGISTRY: GHCR info
+      # --- github.actor: github username
+      # --- secrets.GITHUB_TOKEN: authentication token
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # - Extract information using the "docker/metadata-action" action
+      # -- Targets tags and label information from Github references and events
+      # -- meta: allows output to be referenced in a subsequent step (i.e., uses: ...)
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+      # - Use the "docker/build-push-action" action to build the image 
+      # -- This uses the Dockerfile inside the github repository (must configure path)
+      # -- If the build succeeds, it pushes the image to GitHub Packages.
+      # -- context: location of dockerfile
+
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+        with:
+          context: build/.
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
