@@ -44,7 +44,7 @@ datasets:
 network:
   batch_size: 64
   num_epochs: 300
-  learning_rate: 0.001
+  learning_rate: 0.01
 
 # Create: Path Parameters
 # - train: path to train folder
