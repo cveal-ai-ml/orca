@@ -34,7 +34,8 @@ def get_pca_features(data, num_features):
 def get_nn_features(data, params):
 
     model = load_trained_model(params)
-    loader = DataLoader(data, shuffle=False, batch_size=32)
+    loader = DataLoader(data, shuffle=False, batch_size=32,
+                        num_workers=params["system"]["num_workers"])
 
     all_features = {"high": [], "low": [], "recon": [], "original": []}
     for samples, _ in tqdm(loader, desc="Extracting Features"):

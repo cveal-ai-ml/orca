@@ -5,22 +5,23 @@
 # - experiment: (0) Train DL autoencoder (1) Autoencoder knowledge discovery 
 
 goal:
-  experiment: 1
+  experiment: 0
 
 # Create: System Parameters
 # - strategy: the parallelization procedure 
 # - num_devices: number of dedicated acceleration devices
+# - num_workers: number of dataloader processors
 # - accelerator: type of acceleration device
 
 system:
   strategy: auto
   num_devices: 1
-  accelerator: mps
+  num_workers: 7
+  accelerator: cuda
 
 # Create: Dataset Parameters
 # - transforms: data augmentation strategy
 # - interpolate: use data resize transform
-# - num_workers: number of dataloader processors
 # - space_size: number of features for middle of autoencoder
 # - sample_size: channels and spatial shape of single sample
 
@@ -28,7 +29,6 @@ datasets:
 
   transforms: 0
   interpolate: 1
-  num_workers: 7
 
   grayscale: 0
   perecent_class_samples: 1
@@ -42,9 +42,11 @@ datasets:
 # - learning_rate: amount of allowable gradient change in network
 
 network:
-  batch_size: 64
-  num_epochs: 300
-  learning_rate: 0.01
+  objective: 1
+  optimizer: 0
+  batch_size: 256
+  num_epochs: 100
+  learning_rate: 0.003
 
 # Create: Path Parameters
 # - train: path to train folder
@@ -52,7 +54,7 @@ network:
 # - results: path to results folder
 
 paths:
-  train: /Users/slane/Documents/research/data/cifar/train
-  valid: /Users/slane/Documents/research/data/cifar/test
-  results: /Users/slane/Documents/research/results/cifar/autoencoder_mse
-  model: /Users/slane/Documents/research/results/cifar/autoencoder_mse/lightning_logs/training/checkpoints/epoch=99-step=78200.ckpt
+  train: /develop/data/cifar/train
+  valid: /develop/data/cifar/test
+  results: /develop/results/cifar/autoencoder
+  model: /develop/results/cifar/autoencoder/lightning_logs/training/checkpoints/epoch=99-step=78200.ckpt

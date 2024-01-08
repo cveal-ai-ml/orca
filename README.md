@@ -26,4 +26,41 @@ Miniconda
 
 ## Run Example
 
+### Kubernetes
 
+To stream the output from kubenetes commands, examples are below:
+
+- `watch "kubectl get pods"`
+- `watch "kubectl get jobs"`
+
+Create storage for code, data, and results
+
+- `cd orca/examples/kubernetes/storage`
+- `kubectl apply -f code.yaml`
+- `kubectl apply -f data.yaml`
+- `kubectl apply -f results.yaml`
+
+Confirm storage creation 
+
+- `kubectl get pvc`
+
+Create a pod to interact to with storage
+
+- `cd orca/examples/kubernetes/examples`
+- `kubectl apply -f monitor.yaml`
+
+While pod is building, you can monitor its progress
+
+- `kubectl describe pod orca-monitor`
+
+Enter the pod and download code to code storage
+
+- The pod entrypoint is `/develop/code`
+- `kubectl exec -it orca-monitor -- /bin/bash`
+- `git clone https://github.com/cveal-ai-ml/orca.git`
+- `exit`
+
+Launch job to train ORCA
+
+- `kubectl apply -f train.yaml`
+- Monitor its job creation via `kubectl describe job orca-train`

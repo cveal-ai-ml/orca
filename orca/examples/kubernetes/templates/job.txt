@@ -1,0 +1,56 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+    name: {{job_name}}
+spec:
+template:
+    spec:
+        restartPolicy: Never
+        containers:
+            - name: {{job_name}}
+                image: {{path_image}}
+                command: ["/bin/sh", "-c"]
+                args: ["cd /develop/code/classifier; 
+                       torchrun --nnodes 1 --nproc_per_node {{n_gpus}} --max_restarts 0
+                       main.py --config {{path_to_config}} --deploy {{deploy}} --test {{path_test}} --valid {{path_valid}} --train {{path_train}} --results {{path_results}} --arch {{arch}}]
+            resources:
+                limits:
+                    memory: {{num_mem_lim}}
+                    cpu: {{num_cpus}}
+                    nvidia.com/gpu: {{num_gpus}}
+                requests:
+                    memory: {{num_mem_req}}
+                    cpu: {{num_cpus}}
+                    nvidia.com/gpu: {{num_gpus}}
+                    
+            volumeMounts:
+                - name: classifier-results
+                  mountPath: /develop/results
+                - name: classifier-data
+                  mountPath: /develop/data
+                - name: classifier-code
+                  mountPath: /develop/data
+
+        volumes:
+            - name: classifier-results
+              persistentVolumeClaim:
+                claimName: classifier-results
+
+            - name: classifier-data
+              persistentVolumeClaim:
+                claimName: classifier-data
+
+            - name: classifier-code
+              persistentVolumeClaim:
+                claimName: classifier-code
+
+        affinity:
+            nodeAffinity:
+                requiredDuringSchedulingIgnoredDuringExecution:
+                    nodeSelectorTerms:
+                        - matchExpressions:
+                            - key: nvidia.com/gpu.product
+                              operator: In
+                              values:
+                                - NVIDIA-GeForce-RTX-3090 
+

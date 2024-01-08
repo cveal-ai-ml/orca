@@ -53,6 +53,8 @@ class Dataset:
         image = np.asarray(Image.open(filename).convert("RGB"))
         image = (image / 255.0).astype(np.float32)
         image = image.transpose((2, 0, 1))
+        # indices = np.where(image == 0)
+        # image[indices] = 1e-8
 
         # return self.transforms(image=image)["image"].float()
 
@@ -160,7 +162,7 @@ def load_datasets(params):
     valid = gather_data(params["paths"]["valid"], transforms["valid"])
 
     batch_size = params["network"]["batch_size"]
-    num_workers = params["datasets"]["num_workers"]
+    num_workers = params["system"]["num_workers"]
 
     train = DataLoader(train, batch_size=batch_size, shuffle=True,
                        num_workers=num_workers, persistent_workers=True)

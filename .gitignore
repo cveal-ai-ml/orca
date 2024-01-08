@@ -1,0 +1,9 @@
+# Ignore: Folders
+
+__pycache__
+.ipynb_checkpoints
+
+# Ignore: Files
+
+*.swp
+.DS_Store

@@ -1,0 +1,47 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: orca-train
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: orca-train
+          image: docker pull ghcr.io/cveal-ai-ml/orca:main
+          command: ["/bin/sh", "-c"]
+          args: ["cd /develop/code/orca/orca/examples; \
+                  python.py \
+                  --config configs/params.yaml \
+                  --objective 0 \
+                  --optimizer 0 \
+                  --valid /develop/data/cifar/test \
+                  --train /develop/data/cifar/train \
+                  --results /develop/results/orca"]
+          resources:
+            limits:
+              memory: 64G
+              cpu: 32
+              nvidia.com/gpu: 2
+            requests:
+              memory: 64G
+              cpu: 32
+              nvidia.com/gpu: 2
+          volumeMounts:
+            - name: orca-results
+              mountPath: /develop/results
+            - name: orca-data
+              mountPath: /develop/data
+            - name: orca-code
+              mountPath: /develop/code
+      volumes:
+        - name: orca-results
+          persistentVolumeClaim:
+            claimName: orca-results
+        - name: orca-data
+          persistentVolumeClaim:
+            claimName: orca-data
+        - name: orca-code
+          persistentVolumeClaim:
+            claimName: orca-code

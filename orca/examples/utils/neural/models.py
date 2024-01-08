@@ -29,6 +29,8 @@ class Network(L.LightningModule):
 
         # Load: Model Parameters
 
+        self.obj = params["network"]["objective"]
+        self.opti = params["network"]["optimizer"]
         self.alpha = params["network"]["learning_rate"]
         self.num_epochs = params["network"]["num_epochs"]
         self.space_size = params["datasets"]["space_size"]
@@ -51,8 +53,12 @@ class Network(L.LightningModule):
 
         # Create: Optimzation Routine
 
-        optimizer = torch.optim.AdamW(self.parameters(),
-                                      lr=self.alpha)
+        if self.opti == 0:
+            optimizer = torch.optim.Adam(self.parameters(), lr=self.alpha)
+        elif self.opti == 1:
+            optimizer = torch.optim.AdamW(self.parameters(), lr=self.alpha)
+        else:
+            raise NotImplementedError
 
         # Create: Learning Rate Schedular
 
@@ -78,6 +84,7 @@ class Network(L.LightningModule):
             obj = torch.nn.MSELoss()
         elif choice == 1:
             obj = torch.nn.BCELoss()
+            labels += 1e-6
         else:
             raise NotImplementedError
 
@@ -104,7 +111,11 @@ class Network(L.LightningModule):
 
         # Calculate: Objective Loss
 
-        loss = self.objective(samples, preds, choice=0)
+        loss = self.objective(samples, preds, choice=self.obj)
+
+        
+        #print(loss.item())
+        #input()
 
         self.log("train_error", loss, batch_size=batch_size,
                  on_step=True, on_epoch=True, sync_dist=True)

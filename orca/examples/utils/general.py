@@ -60,6 +60,77 @@ def log_params(params):
     print("\n---------------------------\n")
 
 
+def override_params(params):
+    """
+    Override specific parameters using command line arguments
+
+    Parameters:
+    - params (dict[str, any]): YAML parameters
+    - args (dict[str, any]): CL parameters
+    """
+
+    args = params["cl"]
+
+    arg_list = list(args.keys())
+
+    # Override: Goal Parameter
+
+    if "experiment" in arg_list:
+        params["goal"]["experiment"] = int(args["experiment"])
+
+    # Override: System Parameters
+
+    if "accelerator" in arg_list:
+        params["system"]["accelerator"] = args["accelerator"]
+
+    if "num_devices" in arg_list:
+        params["system"]["num_devices"] = int(args["num_devices"])
+
+    if "num_workers" in arg_list:
+        params["system"]["num_workers"] = int(args["num_workers"])
+
+    # Override: Model Parameters
+
+    if "batch_size" in arg_list:
+        params["dataset"]["batch_size"] = int(args["batch_size"])
+
+    if "optimizer" in arg_list:
+        params["network"]["optimizer"] = int(args["optimizer"])
+
+    if "objective" in arg_list:
+        params["network"]["objective"] = int(args["objective"])
+
+    if "epochs" in arg_list:
+        params["network"]["num_epochs"] = int(args["epochs"])
+
+    # Override: Path Parameters
+
+    if "train" in arg_list:
+        params["paths"]["train"] = args["train"]
+
+    if "valid" in arg_list:
+        params["paths"]["valid"] = args["valid"]
+
+    if "results" in arg_list:
+        params["paths"]["results"] = args["results"]
+
+    if "model" in arg_list:
+        params["paths"]["model"] = args["model"]
+
+
+def configure_params(params):
+    """
+    Configure YAML parameters using command line arguments and re-organization
+
+    Parameters:
+    - params (dict[str, any]): YAML parameters
+    """
+
+    # Override: YAML Parameters Using CL Arguments
+
+    override_params(params)
+
+
 def load_yaml(argument):
     """
     Loads YAML configuration file

@@ -9,7 +9,7 @@ import sys
 import utils.neural.trainer as trainer
 import utils.discovery.discover as discover
 
-from utils.general import load_config
+from utils.general import load_config, configure_params
 
 
 def run_experiment(params):
@@ -43,6 +43,10 @@ if __name__ == "__main__":
     # Load: User Defined Parameters
 
     params = load_config(sys.argv)
+
+    # Update: YAML Parameters
+
+    configure_params(params)
 
     # Run: Experiment
 

@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: orca-monitor
+spec:
+  restartPolicy: Never
+  containers:
+    - name: orca-monitor
+      image: ghcr.io/cveal-ai-ml/orca:main
+      stdin: True
+      tty: True
+      resources:
+        limits:
+          memory: 16G
+          cpu: 12
+          nvidia.com/gpu: 1
+        requests:
+          memory: 16G
+          cpu: 12
+          nvidia.com/gpu: 1
+      volumeMounts:
+        - name: orca-code
+          mountPath: /develop/code
+        - name: orca-data
+          mountPath: /develop/data
+        - name: orca-results
+          mountPath: /develop/results
+  volumes:
+    - name: orca-code
+      persistentVolumeClaim:
+        claimName: orca-code
+    - name: orca-data
+      persistentVolumeClaim:
+        claimName: orca-data
+    - name: orca-results
+      persistentVolumeClaim:
+        claimName: orca-results
