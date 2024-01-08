@@ -117,7 +117,6 @@ if __name__ == "__main__":
     Run experiment
     """
 
-    # path = "/develop/data/cifar"
-    path = "/Users/slane/Downloads/cifar"
+    path = "/develop/data/cifar"
 
     experiment(path)
