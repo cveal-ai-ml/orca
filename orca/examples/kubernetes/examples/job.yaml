@@ -9,13 +9,14 @@ spec:
       restartPolicy: Never
       containers:
         - name: orca-train
-          image: docker pull ghcr.io/cveal-ai-ml/orca:main
+          image: ghcr.io/cveal-ai-ml/orca:main
           command: ["/bin/sh", "-c"]
           args: ["cd /develop/code/orca/orca/examples; \
-                  python.py \
+                  python main.py \
                   --config configs/params.yaml \
                   --objective 0 \
                   --optimizer 0 \
+                  --num_devices 2 \
                   --valid /develop/data/cifar/test \
                   --train /develop/data/cifar/train \
                   --results /develop/results/orca"]

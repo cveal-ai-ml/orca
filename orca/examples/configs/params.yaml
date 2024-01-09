@@ -15,7 +15,7 @@ goal:
 
 system:
   strategy: auto
-  num_devices: 1
+  num_devices: 2
   num_workers: 7
   accelerator: cuda
 
@@ -45,7 +45,7 @@ network:
   objective: 1
   optimizer: 0
   batch_size: 256
-  num_epochs: 100
+  num_epochs: 1000
   learning_rate: 0.003
 
 # Create: Path Parameters
