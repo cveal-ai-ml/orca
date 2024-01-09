@@ -10,6 +10,11 @@ spec:
       containers:
         - name: orca-train
           image: ghcr.io/cveal-ai-ml/orca:main
+          env:
+            - name: NCCL_SOCKET_IFNAME
+              value: eth0
+            - name: NCCL_DEBUG
+              value: INFO
           command: ["/bin/sh", "-c"]
           args: ["cd /develop/code/orca/orca/examples; \
                   python main.py \
