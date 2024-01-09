@@ -14,7 +14,7 @@ goal:
 # - accelerator: type of acceleration device
 
 system:
-  strategy: auto
+  strategy: ddp
   num_devices: 2
   num_workers: 7
   accelerator: cuda
