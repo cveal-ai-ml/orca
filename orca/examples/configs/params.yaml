@@ -14,10 +14,10 @@ goal:
 # - accelerator: type of acceleration device
 
 system:
-  strategy: ddp
+  strategy: auto
   num_devices: 2
   num_workers: 7
-  accelerator: cuda
+  accelerator: gpu
 
 # Create: Dataset Parameters
 # - transforms: data augmentation strategy
@@ -56,5 +56,5 @@ network:
 paths:
   train: /develop/data/cifar/train
   valid: /develop/data/cifar/test
-  results: /develop/results/cifar/autoencoder
-  model: /develop/results/cifar/autoencoder/lightning_logs/training/checkpoints/epoch=99-step=78200.ckpt
+  results: /develop/results/cifar/orca
+  model: /develop/results/cifar/orca/lightning_logs/training/checkpoints/epoch=99-step=78200.ckpt

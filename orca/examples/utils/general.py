@@ -26,40 +26,6 @@ def create_folder(path, overwrite=False):
         os.makedirs(path)
 
 
-def clear_logfile(path, filename="metrics.csv"):
-    """
-    Clears prior log file of specific name
-
-    Parameters:
-    - path (str): path to log folder
-    - filename (str): target log file
-    """
-
-    path_file = os.path.join(path, "lightning_logs", "training", filename)
-    if os.path.exists(path_file):
-        os.remove(path_file)
-
-
-def log_params(params):
-    """
-    Log the parameters used for the experiment
-
-    Parameters:
-    - params (dict[str, any]): user defined parameters
-    """
-
-    print("\n---------------------------\n")
-
-    print("Experiment Parameters")
-
-    for current_key in params:
-        print("\n%s Parameters:" % current_key.capitalize())
-        for sub_key in params[current_key]:
-            print("- %s: %s" % (sub_key, params[current_key][sub_key]))
-
-    print("\n---------------------------\n")
-
-
 def override_params(params):
     """
     Override specific parameters using command line arguments

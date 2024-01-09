@@ -14,7 +14,7 @@ spec:
           args: ["cd /develop/code/orca/orca/examples; \
                   python main.py \
                   --config configs/params.yaml \
-                  --objective 0 \
+                  --objective 1 \
                   --optimizer 0 \
                   --num_devices 2 \
                   --valid /develop/data/cifar/test \

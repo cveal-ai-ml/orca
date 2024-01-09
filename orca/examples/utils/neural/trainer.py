@@ -11,7 +11,6 @@ from lightning.pytorch.callbacks import LearningRateMonitor
 
 from utils.data import load_datasets
 from utils.neural.models import Network
-from utils.general import log_params, clear_logfile
 
 
 def run(params):
@@ -21,10 +20,6 @@ def run(params):
     Parameters:
     - params (dict[str, any]): user defined parameters
     """
-
-    # Log: Experiment Parameters
-
-    log_params(params)
 
     # Load: Experiment Datasets
 
@@ -36,9 +31,7 @@ def run(params):
 
     # Create: Logger
 
-    clear_logfile(params["paths"]["results"])
-    exp_logger = CSVLogger(save_dir=params["paths"]["results"],
-                           version="training")
+    exp_logger = CSVLogger(save_dir=params["paths"]["results"])
 
     # Create: Trainer
 
