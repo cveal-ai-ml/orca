@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: orca-monitor
+  name: orca-monitor-latest
 spec:
   restartPolicy: Never
   containers:
