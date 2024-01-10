@@ -10,6 +10,8 @@ spec:
       containers:
         - name: orca-train
           image: ghcr.io/cveal-ai-ml/orca:main
+          ports:
+            - containerPort: 10044
           env:
             - name: NCCL_SOCKET_IFNAME
               value: eth0
@@ -41,6 +43,8 @@ spec:
               mountPath: /develop/data
             - name: orca-code
               mountPath: /develop/code
+            - name: dshm
+              mountPath: /dev/shm
       volumes:
         - name: orca-results
           persistentVolumeClaim:
@@ -51,3 +55,6 @@ spec:
         - name: orca-code
           persistentVolumeClaim:
             claimName: orca-code
+        - name: dshm
+          emptyDir:
+            medium: Memory
