@@ -21,7 +21,7 @@ spec:
           args: ["cd /develop/code/orca/orca/examples; \
                   python main.py \
                   --config configs/params.yaml \
-                  --objective 1 \
+                  --objective 0 \
                   --optimizer 0 \
                   --num_devices 2 \
                   --epochs 1000 \
