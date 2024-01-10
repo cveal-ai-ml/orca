@@ -24,6 +24,8 @@ spec:
                   --objective 1 \
                   --optimizer 0 \
                   --num_devices 2 \
+                  --epochs 1000 \
+                  --num_workers 32 \
                   --valid /develop/data/cifar/test \
                   --train /develop/data/cifar/train \
                   --results /develop/results/orca"]
