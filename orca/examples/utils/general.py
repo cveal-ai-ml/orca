@@ -58,7 +58,7 @@ def override_params(params):
     # Override: Model Parameters
 
     if "batch_size" in arg_list:
-        params["dataset"]["batch_size"] = int(args["batch_size"])
+        params["network"]["batch_size"] = int(args["batch_size"])
 
     if "optimizer" in arg_list:
         params["network"]["optimizer"] = int(args["optimizer"])

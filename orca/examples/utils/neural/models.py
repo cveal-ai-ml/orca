@@ -113,10 +113,6 @@ class Network(L.LightningModule):
 
         loss = self.objective(samples, preds, choice=self.obj)
 
-        
-        #print(loss.item())
-        #input()
-
         self.log("train_error", loss, batch_size=batch_size,
                  on_step=True, on_epoch=True, sync_dist=True)
 

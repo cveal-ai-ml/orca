@@ -8,23 +8,27 @@ spec:
     - name: orca-tester
       image: ghcr.io/cveal-ai-ml/orca:main
       ports:
-      - containerPort: 10044
+      - containerPort: 11044
       env:
         - name: NCCL_SOCKET_IFNAME
           value: eth0
         - name: NCCL_DEBUG
           value: INFO
+        - name: MASTER_ADDR
+          value: localhost
+        - name: MASTER_PORT
+          value: "11044"
       stdin: True
       tty: True
       resources:
         limits:
           memory: 16G
           cpu: 12
-          nvidia.com/gpu: 1
+          nvidia.com/gpu: 2
         requests:
           memory: 16G
           cpu: 12
-          nvidia.com/gpu: 1
+          nvidia.com/gpu: 2
       volumeMounts:
         - name: orca-code
           mountPath: /develop/code
