@@ -55,6 +55,9 @@ def override_params(params):
     if "num_workers" in arg_list:
         params["system"]["num_workers"] = int(args["num_workers"])
 
+    if "strategy" in arg_list:
+        params["system"]["strategy"] = args["strategy"]
+
     # Override: Model Parameters
 
     if "batch_size" in arg_list:
