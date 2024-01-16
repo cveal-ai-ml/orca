@@ -12,10 +12,10 @@ spec:
       resources:
         limits:
           memory: 16G
-          cpu: 18
+          cpu: 16
         requests:
           memory: 16G
-          cpu: 18
+          cpu: 16
       volumeMounts:
         - name: orca-code
           mountPath: /develop/code
