@@ -23,8 +23,6 @@ spec:
           mountPath: /develop/data
         - name: orca-results
           mountPath: /develop/results
-        - name: dshm
-          mountPath: /dev/shm
 
   volumes:
     - name: orca-code
