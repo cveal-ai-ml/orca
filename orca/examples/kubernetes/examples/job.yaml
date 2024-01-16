@@ -10,7 +10,8 @@ spec:
       containers:
         - name: orca-train
           image: ghcr.io/cveal-ai-ml/orca:main
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
+          #imagePullPolicy: Always
           env:
             - name: NCCL_SOCKET_IFNAME
               value: eth0
