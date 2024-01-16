@@ -7,6 +7,8 @@ spec:
   containers:
     - name: orca-jupyter
       image: ghcr.io/cveal-ai-ml/orca:main
+      imagePullPolicy: Always
+      # imagePullPolicy: IfNotPresent
       command: ["jupyter", "lab", "--no-browser", "--port=10044"]
       resources:
         limits:
