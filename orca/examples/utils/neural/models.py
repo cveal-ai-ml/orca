@@ -142,11 +142,7 @@ class Network(L.LightningModule):
         # Calculate: Objective Loss
 
         loss = self.objective(samples, preds, choice=0)
-        self.log("valid_error_mse", loss, batch_size=batch_size,
-                 on_step=True, on_epoch=True, sync_dist=True)
-
-        loss = self.objective(samples, preds, choice=1)
-        self.log("valid_error_bce", loss, batch_size=batch_size,
+        self.log("valid_error", loss, batch_size=batch_size,
                  on_step=True, on_epoch=True, sync_dist=True)
 
     def forward(self, x):

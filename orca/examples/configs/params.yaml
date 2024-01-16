@@ -42,7 +42,7 @@ datasets:
 # - learning_rate: amount of allowable gradient change in network
 
 network:
-  objective: 1
+  objective: 0
   optimizer: 0
   batch_size: 256
   num_epochs: 1000
