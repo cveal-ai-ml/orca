@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: orca-tester
+  name: orca-jupyter
 spec:
   restartPolicy: Never
   containers:
-    - name: orca-tester
+    - name: orca-jupyter
       image: ghcr.io/cveal-ai-ml/orca:main
       command: ["jupyter", "lab", "--no-browser", "--port=10044"]
       resources:

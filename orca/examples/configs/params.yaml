@@ -33,7 +33,7 @@ datasets:
   grayscale: 0
   perecent_class_samples: 1
 
-  space_size: 3
+  space_size: 2
   sample_size: [3, 32, 32]
 
 # Create: Netowrk Parameters

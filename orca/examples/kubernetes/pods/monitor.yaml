@@ -1,21 +1,21 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: orca-tester
+  name: orca-monitor
 spec:
   restartPolicy: Never
   containers:
-    - name: orca-tester
+    - name: orca-monitor
       image: ghcr.io/cveal-ai-ml/orca:main
       stdin: True
       tty: True
       resources:
         limits:
-          memory: 16G
-          cpu: 16
+          memory: 4G
+          cpu: 4
         requests:
-          memory: 16G
-          cpu: 16
+          memory: 4G
+          cpu: 4
       volumeMounts:
         - name: orca-code
           mountPath: /develop/code
@@ -23,7 +23,6 @@ spec:
           mountPath: /develop/data
         - name: orca-results
           mountPath: /develop/results
-          mountPath: /dev/shm
 
   volumes:
     - name: orca-code
