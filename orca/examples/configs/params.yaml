@@ -57,4 +57,4 @@ paths:
   train: /develop/data/cifar/train
   valid: /develop/data/cifar/test
   results: /develop/results/cifar/orca
-  model: /develop/results/cifar/orca/lightning_logs/training/checkpoints/epoch=99-step=78200.ckpt
+  model: /develop/results/cifar/orca/lightning_logs/training/checkpoints
