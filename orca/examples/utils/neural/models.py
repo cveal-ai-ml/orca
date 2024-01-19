@@ -4,6 +4,7 @@ Purpose: Autoencoder using lighting
 """
 
 
+import os
 import torch
 import lightning as L
 
@@ -33,7 +34,7 @@ class Network(L.LightningModule):
         self.opti = params["network"]["optimizer"]
         self.alpha = params["network"]["learning_rate"]
         self.num_epochs = params["network"]["num_epochs"]
-        self.space_size = params["datasets"]["space_size"]
+        self.space_size = params["network"]["space_size"]
         self.sample_size = params["datasets"]["sample_size"]
 
         # Define: Model Architecture
@@ -173,7 +174,9 @@ class Network(L.LightningModule):
 
 def load_trained_model(params):
 
-    path = params["paths"]["model"]
+    folder = os.path.join(params["paths"]["discovery"], "checkpoints")
+    path = os.path.join(folder, os.listdir(folder)[-1])
+
     model = Network.load_from_checkpoint(path, params=params)
 
     return model

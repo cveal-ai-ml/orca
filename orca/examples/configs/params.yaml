@@ -5,7 +5,7 @@
 # - experiment: (0) Train DL autoencoder (1) Autoencoder knowledge discovery 
 
 goal:
-  experiment: 0
+  experiment: 1
 
 # Create: System Parameters
 # - strategy: the parallelization procedure 
@@ -33,7 +33,6 @@ datasets:
   grayscale: 0
   perecent_class_samples: 1
 
-  space_size: 2
   sample_size: [3, 32, 32]
 
 # Create: Netowrk Parameters
@@ -44,6 +43,7 @@ datasets:
 network:
   objective: 0
   optimizer: 0
+  space_size: 2
   batch_size: 256
   num_epochs: 1000
   learning_rate: 0.003
@@ -56,5 +56,5 @@ network:
 paths:
   train: /develop/data/cifar/train
   valid: /develop/data/cifar/test
-  results: /develop/results/cifar/orca
-  model: /develop/results/cifar/orca/lightning_logs/training/checkpoints
+  results: /develop/results/orca
+  discovery: /develop/results/orca/lightning_logs/version_2

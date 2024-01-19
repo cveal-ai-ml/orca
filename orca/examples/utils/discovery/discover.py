@@ -27,7 +27,7 @@ def run(params):
     - params (dict[str, any]): user defined parameters
     """
 
-    path = os.path.join(params["paths"]["results"], "discovery")
+    path = os.path.join(params["paths"]["discovery"], "discovery")
     create_folder(path)
 
     # Load: Dataset

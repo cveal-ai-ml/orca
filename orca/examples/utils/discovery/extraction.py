@@ -40,7 +40,8 @@ def get_nn_features(data, params):
     all_features = {"high": [], "low": [], "recon": [], "original": []}
     for samples, _ in tqdm(loader, desc="Extracting Features"):
 
-        samples = samples.to(params["system"]["accelerator"])
+        # samples = samples.to("mps")
+        samples = samples.to("cuda")
 
         all_high, all_low, recons = model(samples)
 

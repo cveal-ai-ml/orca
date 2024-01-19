@@ -63,6 +63,9 @@ def override_params(params):
     if "batch_size" in arg_list:
         params["network"]["batch_size"] = int(args["batch_size"])
 
+    if "space_size" in arg_list:
+        params["network"]["space_size"] = int(args["space_size"])
+
     if "optimizer" in arg_list:
         params["network"]["optimizer"] = int(args["optimizer"])
 

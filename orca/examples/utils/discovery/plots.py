@@ -38,8 +38,27 @@ def plot_recons(path, origs, recons):
     fig.savefig(path)
 
 
-def plot_3d(path, x, y, z, colors, title,
+def plot_2d(path, reduced, colors, title,
             fig_size=(15, 15), font_size=14):
+
+    x, y = reduced[:, 0], reduced[:, 1]
+
+    fig, ax = plt.subplots()
+
+    ax.scatter(x, y, c=colors)
+
+    ax.set_xlabel("x0", fontsize=font_size)
+    ax.set_ylabel("x1", fontsize=font_size)
+    ax.set_title(title, fontsize=font_size)
+
+    fig.tight_layout()
+    fig.savefig(path)
+
+
+def plot_3d(path, reduced, colors, title,
+            fig_size=(15, 15), font_size=14):
+
+    x, y, z = reduced[:, 0], reduced[:, 1], reduced[:, 2]
 
     fig = plt.figure()
     ax = fig.add_subplot(projection="3d")
@@ -62,23 +81,27 @@ def plot_features(path, features, labels):
     all_high = features["high"]
     all_low = features["low"]
 
-    # Save: Low Features
+    num_features = all_low.shape[-1]
 
-    path_save = os.path.join(path, "spatial.png")
-    x, y, z = all_low[:, 0], all_low[:, 1], all_low[:, 2]
-    plot_3d(path_save, x, y, z, labels, "Middle Space Features")
+    # Save: Feature Embeddings
 
-    # Save: High Features
+    path_pca = os.path.join(path, "pca.png")
+    path_tsne = os.path.join(path, "tsne.png")
+    path_low = os.path.join(path, "spatial.png")
 
-    path_save = os.path.join(path, "pca.png")
-    reduced = get_pca_features(all_high, num_features=3)
-    x, y, z = reduced[:, 0], reduced[:, 1], reduced[:, 2]
-    plot_3d(path_save, x, y, z, labels, "High Dimensional Features (PCA)")
+    pca = get_pca_features(all_high, num_features=num_features)
+    tsne = get_tsne_features(all_high, num_features=num_features)
 
-    path_save = os.path.join(path, "tsne.png")
-    reduced = get_tsne_features(all_high, num_features=3)
-    x, y, z = reduced[:, 0], reduced[:, 1], reduced[:, 2]
-    plot_3d(path_save, x, y, z, labels, "High Dimensional Features (TSNE)")
+    if num_features == 2:
+        plot_data = plot_2d
+    elif num_features == 3:
+        plot_data = plot_3d
+    else:
+        raise NotImplementedError
+
+    plot_data(path_low, all_low, labels, "Middle Space Features")
+    plot_data(path_pca, pca, labels, "High Dimensional Features (PCA)")
+    plot_data(path_tsne, tsne, labels, "High Dimensional Features (TSNE)")
 
     # Save: Reconstructed Features
 
