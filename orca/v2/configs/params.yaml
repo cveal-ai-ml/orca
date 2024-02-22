@@ -1,0 +1,35 @@
+# Purpose: Configuration File (ORCA)
+# Author: Charlie
+
+
+experiment: 1
+
+system:
+  num_cpus: 8
+  gpus:
+    strategy: auto
+    num_devices: 1
+    accelerator: mps
+
+paths:
+  test: /Users/slane/Documents/research/data/cifar/test
+  results: /Users/slane/Documents/research/results/spie_orca
+
+discovery:
+
+  dataset:
+    percent_class_samples: 100
+
+  predictions:
+    create: 1
+    batch_size: 256
+    top_k: [1, 10, 100]
+    tsne_dims: [2, 3, 32, 128, 512]
+
+  matrices:
+    create: 1
+
+  clustering:
+    create: 1
+    max_k: 20
+
